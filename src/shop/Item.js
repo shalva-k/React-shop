@@ -40,7 +40,8 @@ export default function Search() {
             .catch(error => {
                 console.log(error);
             })
-    }, [item]);
+    }, []);
+
     useEffect(() => {
         axios.get(`https://us-central1-js04-b4877.cloudfunctions.net/api/products/${itemId}/reviews`)
             .then(response => {
@@ -49,7 +50,7 @@ export default function Search() {
             .catch(error => {
                 console.log(error);
             })
-    }, [item]);
+    }, []);
 
     if (reviews.length > 1) {
         showReviews = "Reviews:"
