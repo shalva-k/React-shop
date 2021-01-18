@@ -2,10 +2,12 @@ import Header from "./Header";
 import { makeStyles } from '@material-ui/core/styles';
 import Main from "./Main";
 import Footer from "./Footer";
+import UserContext from './UserContext';
 import './App.css';
 import {
     BrowserRouter as Router,
 } from "react-router-dom";
+import {useState} from "react";
 
 const useStyles = makeStyles((theme) => ({
    container:  {
@@ -17,16 +19,22 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
+const token = localStorage.getItem('token');
+
 function App() {
     const classes = useStyles();
-
+    const [currentUser, setCurrentUser] = useState({
+        token
+    });
     return (
         <Router>
-            <Header />
-            <div className={classes.container}>
-                <Main />
-            </div>
-            <Footer />
+            <UserContext.Provider value={{currentUser, setCurrentUser}}>
+                <Header />
+                <div className={classes.container}>
+                    <Main />
+                </div>
+                <Footer />
+            </UserContext.Provider>
         </Router>
   );
 }

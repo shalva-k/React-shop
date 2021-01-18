@@ -1,14 +1,16 @@
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import Button from '@material-ui/core/Button';
 import {
     Link,
     useHistory
 } from "react-router-dom";
 import { useState } from "react";
+import PaginationItem from "@material-ui/lab/PaginationItem";
+import IsLogged from "./hooks/IsLogged";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,10 +34,11 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
-        marginLeft: 0,
+        marginLeft: "auto",
+        marginRight: 10,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(1),
+            marginLeft: "auto",
             width: 'auto',
         },
     },
@@ -84,6 +87,8 @@ export default function Header() {
     const [value, setValue] = useState();
     const history = useHistory();
 
+    const {isLoggedIn, saveToken} = IsLogged();
+
     const handleChange = event => {
         setValue(event.target.value);
     };
@@ -99,12 +104,10 @@ export default function Header() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography className={classes.title} variant="h6" noWrap>
-                        <ul className={classes.menu}>
+                    <ul className={classes.menu}>
                             <li><Link to="/">Home</Link></li>
                             <li><Link to="/shop">Shop</Link></li>
-                        </ul>
-                    </Typography>
+                    </ul>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -122,6 +125,19 @@ export default function Header() {
                         />
                         </form>
                     </div>
+                    { isLoggedIn ? <Button
+                        variant="contained"
+                        component={Link}
+                        to="profile"
+                        >Profile
+                        </Button> :
+                        <Button
+                            variant="contained"
+                            component={Link}
+                            to="signin"
+                        >Sign In
+                        </Button>
+                    }
                 </Toolbar>
             </AppBar>
         </div>
