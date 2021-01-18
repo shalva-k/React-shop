@@ -128,13 +128,13 @@ export default function Header() {
                     { isLoggedIn ? <Button
                         variant="contained"
                         component={Link}
-                        to="profile"
+                        to="/profile"
                         >Profile
                         </Button> :
                         <Button
                             variant="contained"
                             component={Link}
-                            to="signin"
+                            to="/signin"
                         >Sign In
                         </Button>
                     }
